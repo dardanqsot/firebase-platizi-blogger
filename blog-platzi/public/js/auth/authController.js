@@ -6,13 +6,15 @@ $(() => {
         const nombres = $('#nombreContactoReg').val();
         const email = $('#emailContactoReg').val();
         const password = $('#passwordReg').val();
-        const auth = Autenticacion()
+        const auth = new Autenticacion()
         auth.crearCuentaEmailPass(email, password, nombres)
     });
 
     $("#btnInicioEmail").click(() => {
         const email = $('#emailSesion').val();
         const password = $('#passwordSesion').val();
+        const auth = new Autenticacion();
+        auth.autEmailPass(email, password);
         // TODO : LLamar auth cuenta con email
     });
 
@@ -22,7 +24,7 @@ $(() => {
 
     $('#btnRegistrarse').click(() => {
         $('#modalSesion').modal('close');
-        $('#modalRegistro').modal('open');        
+        $('#modalRegistro').modal('open');          
     });
 
     $('#btnIniciarSesion').click(() => {

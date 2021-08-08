@@ -1,10 +1,22 @@
 class Autenticacion {
   autEmailPass (email, password) {
-    // $('#avatar').attr('src', 'imagenes/usuario_auth.png')
-    // Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
-    // $('.modal').modal('close')
+    firebase.auth().signInWithEmailAndPassword(email, password).then(result => {
+      if (result.user.emailVerified) {
+        $('#avatar').attr('src', 'imagenes/usuario_auth.png')
+        Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
+      } else {
+        firebase.auth().signOut()
+        Materialize.toast(
+          `Por favor realiza la verificación de la cuenta`,
+          5000
+        )
+      }
+    })
+
+    $('.modal').modal('close')
   }
 
+  
   crearCuentaEmailPass (email, password, nombres) {
     firebase
       .auth()
@@ -15,10 +27,10 @@ class Autenticacion {
         })
 
         const configuracion = {
-          url: 'http://localhost:3000/'
+          url: 'https://blogcurso-6c7f9.web.app/'
         }
 
-        result.user.sendEmailVerfication(configuracion).catch(error => {
+        result.user.sendEmailVerification(configuracion).catch(error => {
           console.error(error)
           Materialize.toast(error.message, 4000)
         })
